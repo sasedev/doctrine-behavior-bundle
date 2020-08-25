@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="sasedev_doctrine_behavior.listener.translatable.class">Sasedev\Doctrine\Behavior\Translatable\TranslatableListener</parameter>
+        <parameter key="sasedev_doctrine_behavior.event_listener.locale.class">Sasedev\Doctrine\BehaviorBundle\EventListener\LocaleListener</parameter>
+    </parameters>
+    <services>
+        <service id="sasedev_doctrine_behavior.listener.translatable" class="%sasedev_doctrine_behavior.listener.translatable.class%" public="false">
+            <call method="setAnnotationReader">
+                <argument type="service" id="annotation_reader" />
+            </call>
+            <call method="setDefaultLocale">
+                <argument>%sasedev_doctrine_behavior.default_locale%</argument>
+            </call>
+            <call method="setTranslatableLocale">
+                <argument>%sasedev_doctrine_behavior.default_locale%</argument>
+            </call>
+            <call method="setTranslationFallback">
+                <argument>%sasedev_doctrine_behavior.translation_fallback%</argument>
+            </call>
+            <call method="setPersistDefaultLocaleTranslation">
+                <argument>%sasedev_doctrine_behavior.persist_default_translation%</argument>
+            </call>
+            <call method="setSkipOnLoad">
+                <argument>%sasedev_doctrine_behavior.skip_translation_on_load%</argument>
+            </call>
+        </service>
+
+        <service id="sasedev_doctrine_behavior.event_listener.locale" class="%sasedev_doctrine_behavior.event_listener.locale.class%">
+            <argument type="service" id="sasedev_doctrine_behavior.listener.translatable" />
+            <tag name="kernel.event_subscriber" />
+        </service>
+    </services>
+</container>

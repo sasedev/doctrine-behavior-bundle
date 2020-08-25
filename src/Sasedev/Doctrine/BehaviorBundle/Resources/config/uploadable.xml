@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="sasedev_doctrine_behavior.listener.uploadable.class">Sasedev\Doctrine\Behavior\Uploadable\UploadableListener</parameter>
+        <parameter key="sasedev_doctrine_behavior.uploadable.manager.class">Sasedev\Doctrine\BehaviorBundle\Uploadable\UploadableManager</parameter>
+        <parameter key="sasedev_doctrine_behavior.uploadable.mime_type_guesser.class">Sasedev\Doctrine\BehaviorBundle\Uploadable\MimeTypeGuesserAdapter</parameter>
+        <parameter key="sasedev_doctrine_behavior.uploadable.default_file_info.class">Sasedev\Doctrine\BehaviorBundle\Uploadable\UploadedFileInfo</parameter>
+    </parameters>
+    <services>
+        <service id="sasedev_doctrine_behavior.listener.uploadable" class="%sasedev_doctrine_behavior.listener.uploadable.class%" public="false">
+            <configurator service="sasedev_doctrine_behavior.uploadable.configurator" method="configure" />
+            <argument type="service" id="sasedev_doctrine_behavior.uploadable.mime_type_guesser" />
+
+            <call method="setAnnotationReader">
+                <argument type="service" id="annotation_reader" />
+            </call>
+
+            <call method="setDefaultFileInfoClass">
+                <argument>%sasedev_doctrine_behavior.uploadable.default_file_info.class%</argument>
+            </call>
+        </service>
+
+        <service id="sasedev_doctrine_behavior.uploadable.mime_type_guesser" class="%sasedev_doctrine_behavior.uploadable.mime_type_guesser.class%" public="false" />
+
+        <service id="sasedev_doctrine_behavior.uploadable.manager" class="%sasedev_doctrine_behavior.uploadable.manager.class%" public="true">
+            <argument type="service" id="sasedev_doctrine_behavior.listener.uploadable" />
+            <argument>%sasedev_doctrine_behavior.uploadable.default_file_info.class%</argument>
+        </service>
+
+        <service id="Sasedev\Doctrine\BehaviorBundle\Uploadable\UploadableManager" alias="sasedev_doctrine_behavior.uploadable.manager" public="false" />
+
+        <service id="sasedev_doctrine_behavior.uploadable.configurator" class="Sasedev\Doctrine\BehaviorBundle\Uploadable\ValidatorConfigurator" public="false">
+            <argument>%sasedev_doctrine_behavior.uploadable.validate_writable_directory%</argument>
+        </service>
+    </services>
+</container>
