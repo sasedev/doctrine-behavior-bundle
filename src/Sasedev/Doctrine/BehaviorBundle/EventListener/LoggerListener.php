@@ -45,18 +45,21 @@ class LoggerListener implements EventSubscriberInterface
     public function onKernelRequest(RequestEvent $event)
     {
 
-        //if (HttpKernelInterface::MASTER_REQUEST !== $event->getRequestType()) {
-        if ($event->isMasterRequest()) {
+        // if (HttpKernelInterface::MASTER_REQUEST !== $event->getRequestType()) {
+        if ($event->isMasterRequest())
+        {
             return;
         }
 
-        if (null === $this->tokenStorage || null === $this->authorizationChecker) {
+        if (null === $this->tokenStorage || null === $this->authorizationChecker)
+        {
             return;
         }
 
         $token = $this->tokenStorage->getToken();
 
-        if (null !== $token && $this->authorizationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if (null !== $token && $this->authorizationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED'))
+        {
             $this->loggableListener->setUsername($token);
         }
 

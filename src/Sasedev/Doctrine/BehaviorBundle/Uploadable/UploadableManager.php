@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class UploadableManager
 {
 
-    /** @var \Sasedev\Doctrine\Behavior\Uploadable\UploadableListener */
+    /** @var UploadableListener */
     private $listener;
 
     private $fileInfoClass;
@@ -25,13 +25,16 @@ class UploadableManager
      * After calling this method, the file info you passed is set for this entity in the listener. This is all it takes
      * to upload a file for an entity in the Uploadable extension.
      *
-     * @param object $entity - The entity you are marking to "Upload" as soon as you call "flush".
-     * @param mixed $fileInfo - The file info object or array. In Symfony, this will be typically an UploadedFile instance.
+     * @param object $entity
+     *            - The entity you are marking to "Upload" as soon as you call "flush".
+     * @param mixed $fileInfo
+     *            - The file info object or array. In Symfony, this will be typically an UploadedFile instance.
      */
     public function markEntityToUpload($entity, $fileInfo)
     {
 
-        if (is_object($fileInfo) && $fileInfo instanceof UploadedFile) {
+        if (is_object($fileInfo) && $fileInfo instanceof UploadedFile)
+        {
             $fileInfoClass = $this->fileInfoClass;
 
             $fileInfo = new $fileInfoClass($fileInfo);
@@ -43,7 +46,7 @@ class UploadableManager
 
     /**
      *
-     * @return \Sasedev\Doctrine\Behavior\Uploadable\UploadableListener
+     * @return UploadableListener
      */
     public function getUploadableListener()
     {

@@ -36,8 +36,7 @@ class SasedevDoctrineBehaviorExtension extends Extension
         $loaded = [];
 
         $this->entityManagers = $this->processObjectManagerConfigurations($config['orm'], $container, $loader, $loaded, 'doctrine.event_subscriber');
-        $this->documentManagers = $this->processObjectManagerConfigurations($config['mongodb'], $container, $loader, $loaded,
-            'doctrine_mongodb.odm.event_subscriber');
+        $this->documentManagers = $this->processObjectManagerConfigurations($config['mongodb'], $container, $loader, $loaded, 'doctrine_mongodb.odm.event_subscriber');
 
         $container->setParameter('sasedev_doctrine_behavior.default_locale', $config['default_locale']);
         $container->setParameter('sasedev_doctrine_behavior.translation_fallback', $config['translation_fallback']);
@@ -116,8 +115,7 @@ class SasedevDoctrineBehaviorExtension extends Extension
      *
      * @return array
      */
-    private function processObjectManagerConfigurations(array $configs, ContainerBuilder $container, LoaderInterface $loader, array &$loaded,
-        $doctrineSubscriberTag)
+    private function processObjectManagerConfigurations(array $configs, ContainerBuilder $container, LoaderInterface $loader, array &$loaded, $doctrineSubscriberTag)
     {
 
         $usedManagers = [];

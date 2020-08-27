@@ -57,16 +57,19 @@ class BlameListener implements EventSubscriberInterface
     public function onKernelRequest(RequestEvent $event)
     {
 
-        if (HttpKernelInterface::MASTER_REQUEST !== $event->getRequestType()) {
+        if (HttpKernelInterface::MASTER_REQUEST !== $event->getRequestType())
+        {
             return;
         }
 
-        if (null === $this->tokenStorage || null === $this->authorizationChecker) {
+        if (null === $this->tokenStorage || null === $this->authorizationChecker)
+        {
             return;
         }
 
         $token = $this->tokenStorage->getToken();
-        if (null !== $token && $this->authorizationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if (null !== $token && $this->authorizationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED'))
+        {
             $this->blameableListener->setUserValue($token->getUser());
         }
 

@@ -28,7 +28,8 @@ class ValidateExtensionConfigurationPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
 
-        $container->getExtension('sasedev_doctrine_behavior')->configValidate($container);
+        $container->getExtension('sasedev_doctrine_behavior')
+            ->configValidate($container);
 
     }
 

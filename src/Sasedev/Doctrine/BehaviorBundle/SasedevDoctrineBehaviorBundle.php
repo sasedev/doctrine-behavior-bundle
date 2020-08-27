@@ -23,7 +23,10 @@ class SasedevDoctrineBehaviorBundle extends Bundle
      */
     public function build(ContainerBuilder $container)
     {
+
         $container->addCompilerPass(new ValidateExtensionConfigurationPass());
+
     }
+
 }
 
